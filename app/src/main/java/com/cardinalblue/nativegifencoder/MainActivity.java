@@ -39,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
                 final int height = 100;
                 int delay = 100; // 100 ms
                 final File file = new File(MainActivity.this.getExternalCacheDir(), mRandom.nextInt(10000) + ".gif");
-                final Giffle encoder = builder.size(width, height).delay(delay).file(file.getAbsolutePath()).build();
+                final Giffle encoder = builder.size(width, height).delay(delay).file(file).build();
                 Toast.makeText(MainActivity.this, "starting generate gif", Toast.LENGTH_SHORT).show();
                 Task.callInBackground(new Callable<File>() {
                     @Override
