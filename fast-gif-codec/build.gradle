@@ -1,0 +1,97 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.cardinalblue.library'
+version = '0.1'
+
+def VCS_URL = 'https://github.com/cardinalblue/fast-gif-codec-android'
+def ARTIFACT_ID = name
+def DESC = 'A native GIF codec library for Android'
+def VER = version
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+            moduleName "gifflen"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    testCompile 'junit:junit:4.12'
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name ARTIFACT_ID
+            description DESC
+            url VCS_URL
+            inceptionYear '2015'
+
+            packaging 'aar'
+            groupId 'com.cardinalblue.library'
+            artifactId ARTIFACT_ID
+            version VER
+
+            licenses {
+                license {
+                    name 'MIT'
+                    url 'https://opensource.org/licenses/MIT'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection VCS_URL + '.git'
+                url VCS_URL
+            }
+            developers {
+                developer {
+                    name 'Prada'
+                }
+                developer {
+                    name 'Fumin'
+                }
+                developer {
+                    name 'Boy'
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = ARTIFACT_ID
+        userOrg = user
+        licenses = ['MIT']
+        vcsUrl = VCS_URL + '.git'
+        version {
+            name = VER
+            desc = DESC
+            vcsTag = VER
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}

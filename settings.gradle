@@ -1,1 +1,3 @@
-include ':app', ':library'
+include ':app', ':fast-gif-codec'
+
+rootProject.name = 'fast-gif-codec'
